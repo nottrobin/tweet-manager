@@ -52,12 +52,18 @@ Listening for tweets from https://twitter.com/intent/user?user_id=xxxxxxx (ctrl+
 
 This will use [the Streaming API](https://dev.twitter.com/streaming/overview) to listen for any new tweets to the set Twitter account, and add them to the tweets file (`data/tweets.json` by default). The number of tweets stored in the file will never exceed the `max_tweets` setting.
 
-TweetManager
+Models
 ---
 
-The `TweetManager` class in `models.py` can be used to manage a JSON file of tweets, to read tweets or add to them:
+`models.py` contains a few classes and functions to help manage the tweets file.
+
+### TweetManager
+
+The `TweetManager` class can be used to manage a JSON file of tweets, to read tweets or add to them:
 
 ``` python
+from models import TweetManager
+
 # Specify your own options
 tweet_manager = TweetManager(
     filename='my-tweets.json',
@@ -76,6 +82,27 @@ tweets =  manager.get_tweets()
 # Or add tweets to the file
 more_tweets = []  # Populate this with tweet data
 manager.add_tweets(more_tweets)
+```
+
+### add_html
+
+The `add_html` function will take a list of tweets and add a `.html` property to each of them which contains the tweet text with the entities (user mentions, hashtags etc.) properly encoded in HTML:
+
+``` python
+from models import add_html
+
+# Let's assume the `tweets` variable contains tweet data
+
+augmented_tweets = add_html(tweets)
+
+# Print out the HTML for a tweet
+print augmented_tweets[0].html
+```
+
+The `.html` property might contain text something like this:
+
+``` html
+<a href="https://twitter.com/nottRobin">@nottRobin</a> heard about the <a href="https://twitter.com/hashtag/testtesttest">#testtesttest</a> hashtag? See this website for more details: <a href="https://t.co/rgYNeuT864">robinwinslow.co.uk</a>
 ```
 
 Tests
