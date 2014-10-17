@@ -8,7 +8,7 @@ This uses [Tweepy](https://github.com/tweepy/tweepy) to consume data from the [R
 Settings
 ---
 
-Before using this you need to update `settings.py` with the ID of a Twitter user, and some API credentials.
+Before using this you need to update [`settings.py`](settings.py) with the ID of a Twitter user, and some API credentials.
 
 You can get the ID for a Twitter user from <http://gettwitterid.com/>, and you should be able to create API credentials by visiting <https://apps.twitter.com/>.
 
@@ -35,6 +35,8 @@ There are two scripts you can use to retrieve and watch for tweets:
 
 ### get-tweets.py
 
+[`get-tweets.py`](get-tweets.py) stores the top few tweets.
+
 ``` bash
 $ ./get-tweets.py 
 Updating data/tweets.json with the top 3 tweets from https://twitter.com/intent/user?user_id=xxxxxxx
@@ -44,6 +46,8 @@ Done
 This will use [the REST API](https://dev.twitter.com/rest/public) to get the top tweets from the set Twitter account and store them in the tweets file (`data/tweets.json` by default). `max_tweets`, `user_id` and `tweets_filename` can be updated in `settings.py`.
 
 ### stream-tweets.py
+
+[`stream-tweets.py`](stream-tweets.py) listens for new tweets.
 
 ``` bash
 $ ./stream-tweets.py 
@@ -55,11 +59,11 @@ This will use [the Streaming API](https://dev.twitter.com/streaming/overview) to
 Models
 ---
 
-`models.py` contains a few classes and functions to help manage the tweets file.
+[`models.py`](models.py) contains a few classes and functions to help manage the tweets file.
 
 ### TweetManager
 
-The `TweetManager` class can be used to manage a JSON file of tweets, to read tweets or add to them:
+The [`TweetManager`](models.py#L88) class can be used to manage a JSON file of tweets, to read tweets or add to them:
 
 ``` python
 from models import TweetManager
@@ -86,7 +90,7 @@ manager.add_tweets(more_tweets)
 
 ### add_html
 
-The `add_html` function will take a list of tweets and add a `.html` property to each of them which contains the tweet text with the entities (user mentions, hashtags etc.) properly encoded in HTML:
+The [`add_html`](models.py#L8) function will take a list of tweets and add a `.html` property to each of them which contains the tweet text with the entities (user mentions, hashtags etc.) properly encoded in HTML:
 
 ``` python
 from models import add_html
